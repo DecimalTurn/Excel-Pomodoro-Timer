@@ -1,6 +1,7 @@
 Attribute VB_Name = "Main"
 'Infos: different modes for userform:
-'REFERENCE: https://www.mrexcel.com/forum/excel-questions/465425-minimize-excel-leave-userform-showing.html
+'https://www.mrexcel.com/forum/excel-questions/465425-minimize-excel-leave-userform-showing.html
+
 
 Public AllowedTime As Integer 'Number of minutes to count down
 Public AllowedTimeSec  As Integer 'Number of seconds to count down
@@ -21,7 +22,7 @@ Sub PomodoroSession()
     BreakTimeSec = Range("Break_sec")
     AutoLaunch = True
     ThisWorkbook.Application.WindowState = xlMinimized
-    If Range("Run_in_seperate_instance").Value = True And Reopen_decision = True Then
+    If Reopen_decision = True Then
         MsgBox "To let you work with Excel while the timer is running, this file will now be reopen in a second instance of Excel." & vbNewLine & _
         "Once, the was has been reopen, you will need to relaunch the timer."
         Call OpenItSelfInAnotherInstance

@@ -13,12 +13,12 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-'Countdown timer
-'REFERENCE: https://www.mrexcel.com/forum/excel-questions/594922-countdown-timer-userform.html
-
 Option Explicit
 
 Const sleeptime = 10 'Miliseconds
+'Countdown timer
+'Source: https://www.mrexcel.com/forum/excel-questions/594922-countdown-timer-userform.html
+
 
 Private Sub UserForm_Initialize()
 
@@ -99,8 +99,8 @@ Private Sub Launch_timer()
     Loop Until RemaingTime <= 0 Or StopTimer
     
     'Recording session
-    If StopTimer = False Or ThisWorkbook.Sheets("Settings").Range("Record_unfinished").Value2 = True Then
-        If (TotalTime - RemaingTime) / 60 > ThisWorkbook.Sheets("Settings").Range("No_Recording_limit") Then
+    If StopTimer = False Or ThisWorkbook.Application.Range("Record_unfinished").Value2 = True Then
+        If (TotalTime - RemaingTime) / 60 > Range("No_Recording_limit") Then
             Call Add_new_record(TodaysDate, StartTime, Now, Not (StopTimer), Range("TaskNameRng"))
         End If
     End If
@@ -109,7 +109,7 @@ Private Sub Launch_timer()
     
     If StopTimer = False Then 'If the timer was stopped by the user
         'Proceed with the Break
-        If ThisWorkbook.Sheets("Settings").Range("Sound_end_Pomodoro") = True Then Beep
+        If ThisWorkbook.Application.Range("Sound_end_Pomodoro") = True Then Beep
         TextBox2.Value = "Break"
         Call TakeBreak
     Else
@@ -182,7 +182,7 @@ Private Sub TakeBreak2()
     Loop Until RemaingTime <= 0 Or StopTimer
 
     If StopTimer = False Then
-        If ThisWorkbook.Sheets("Settings").Range("Sound_end_Break") = True Then Beep
+        If ThisWorkbook.Application.Range("Sound_end_Break") = True Then Beep
         'Remain in color to get the user's attention
         PomodoroTimer.BackColor = GetRGBColor_Fill(Range("Flashing_color")) 'Flashing color
         TextBox2.BackColor = GetRGBColor_Fill(Range("Flashing_color")) 'Flashing color
@@ -231,12 +231,10 @@ Private Sub UserForm_QueryClose(Cancel As Integer, CloseMode As Integer)
     
     'At this point, since the user clicked on the userform to close it. Excel is the active window, but it might not be on top.
     'Make Excel the active window (optional)
-    On Error Resume Next
-    If ThisWorkbook.Sheets("Settings").Range("Reopen_Excel_after_x").Value2 = True Then
+    If ThisWorkbook.Application.Range("Reopen_Excel_after_x").Value2 = True Then
         Call AppActivate(Wkb.Application.caption, True)
         ShowWindow GetForegroundWindow, SW_SHOWMAXIMIZED
     End If
-    On Error GoTo 0
     
 End Sub
 

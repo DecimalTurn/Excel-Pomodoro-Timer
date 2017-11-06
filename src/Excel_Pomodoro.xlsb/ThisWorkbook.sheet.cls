@@ -1,8 +1,8 @@
 Private Sub Workbook_Open()
-    If Sheets("Settings").Range("Run_in_seperate_instance").Value = True Then
+    If Range("Run_in_seperate_instance").Value = True Then
         If Reopen_decision = True Then Call OpenItSelfInAnotherInstance
     End If
-    If Sheets("Settings").Range("Shortcut").Value = True Then
+    If Range("Shortcut").Value = True Then
         Call Shortcuts
     End If
 End Sub
