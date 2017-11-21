@@ -52,12 +52,12 @@ End Sub
 
 Sub Add_task(ByVal TaskName As String)
 
-    Dim x As Variant
+    Dim X As Variant
     On Error Resume Next
-    x = Application.Match(TaskName, Range("Recent_Tasks").Value2, 0)
+    X = Application.Match(TaskName, Range("Recent_Tasks").Value2, 0)
     On Error GoTo 0
     
-    If IsError(x) Then
+    If IsError(X) Then
         Sheets("Recent").Cells(LastCell_row(Sheets("Recent")) + 1, 1).Value2 = TaskName
     End If
     

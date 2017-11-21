@@ -27,7 +27,8 @@ Private Sub UserForm_Initialize()
     If Range("Custom_position") = True Then
         Me.Top = Range("Top_pos").Value2 * (PointPerPixelY() * GETWORKAREA_HEIGHT - Me.Height)
         Me.Left = Range("Left_pos").Value2 * (PointPerPixelX() * GETWORKAREA_WIDTH - Me.Width)
-    Else
+    ElseIf Not IsMac Then
+        'Reposition the window
         Me.Top = PointPerPixelY() * GETWORKAREA_HEIGHT - Me.Height
         Me.Left = PointPerPixelX() * GETWORKAREA_WIDTH - Me.Width
     End If
