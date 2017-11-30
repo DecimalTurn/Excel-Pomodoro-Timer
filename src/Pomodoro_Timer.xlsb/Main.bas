@@ -21,8 +21,8 @@ Sub PomodoroSession()
     BreakTimeSec = Range("Break_sec")
     AutoLaunch = True
     If Range("Run_in_seperate_instance").Value = True And Reopen_decision = True Then
-        MsgBox "To let you work with Excel while the timer is running, this file will now be reopen in a second instance of Excel." & vbNewLine & _
-        "Once, the was has been reopen, you will need to relaunch the timer."
+        MsgBox "To let you work with Excel while the timer is running, this file will now be reopened in a second instance of Excel." & vbNewLine & _
+        "Once it was has been reopened, you will need to relaunch the timer."
         Call OpenItSelfInAnotherInstance
     End If
     ThisWorkbook.Application.WindowState = xlMinimized
