@@ -21,13 +21,15 @@ Option Explicit
 Const sleeptime = 10 'Miliseconds
 
 Private Sub UserForm_Initialize()
-
+    UFIsVisible = True
     'Position of the Userform
-    Me.StartUpPosition = 0
-    If Range("Custom_position") = True Then
-        Me.Top = Range("Top_pos").Value2 * (PointPerPixelY() * GETWORKAREA_HEIGHT - Me.Height)
-        Me.Left = Range("Left_pos").Value2 * (PointPerPixelX() * GETWORKAREA_WIDTH - Me.Width)
-    Else
+    If ThisWorkbook.Sheets("Settings").Range("Custom_position") = True And Not IsMac Then
+        Me.StartUpPosition = 0
+        Me.Top = ThisWorkbook.Sheets("Settings").Range("Top_pos").Value2 * (PointPerPixelY() * GETWORKAREA_HEIGHT - Me.Height)
+        Me.Left = ThisWorkbook.Sheets("Settings").Range("Left_pos").Value2 * (PointPerPixelX() * GETWORKAREA_WIDTH - Me.Width)
+    ElseIf Not IsMac Then
+        'Reposition the window
+        Me.StartUpPosition = 0
         Me.Top = PointPerPixelY() * GETWORKAREA_HEIGHT - Me.Height
         Me.Left = PointPerPixelX() * GETWORKAREA_WIDTH - Me.Width
     End If
@@ -44,16 +46,29 @@ Private Sub UserForm_Initialize()
     
     'The code below makes sure that the userform stays on top of all windows.
     'Source: https://www.mrexcel.com/forum/excel-questions/386643-userform-always-top.html
-
-    AlwaysOnTop Me.caption
-
+    If Not IsMac Then
+        AlwaysOnTop Me.caption
+    End If
+    
+    If AutoLaunch Then
+        If IsMac Then
+            Call Launch_timer_mac
+        End If
+    End If
 
 End Sub
 Private Sub UserForm_Activate()
-    If AutoLaunch Then Call Launch_timer
+        If AutoLaunch Then
+            If Not IsMac Then
+                Call Launch_timer
+            End If
+        End If
 End Sub
 
 Private Sub Launch_timer()
+    'Stop the code if the form is not visible
+    If UFIsVisible = False Then: Debug.Print "Form is not visible. The code will now stop.": End
+    
     Dim calc_iniset As Variant: calc_iniset = Application.Calculation
     Call Optimize_VBA_Performance(True)
     
@@ -101,7 +116,7 @@ Private Sub Launch_timer()
     'Recording session
     If StopTimer = False Or ThisWorkbook.Sheets("Settings").Range("Record_unfinished").Value2 = True Then
         If (TotalTime - RemaingTime) / 60 > ThisWorkbook.Sheets("Settings").Range("No_Recording_limit") Then
-            Call Add_new_record(TodaysDate, StartTime, Now, Not (StopTimer), Range("TaskNameRng"))
+            Call Add_new_record(TodaysDate, StartTime, Now, Not (StopTimer), ThisWorkbook.Sheets("Pomodoro").Range("TaskNameRng"))
         End If
     End If
     
@@ -162,9 +177,9 @@ Private Sub TakeBreak2()
         'Flashing
         If TotalTime - RemaingTime < 9 Then
             If S Mod 2 = 1 Then
-                PomodoroTimer.BackColor = GetRGBColor_Fill(Range("Flashing_color")) 'Flashing color
-                TextBox2.BackColor = GetRGBColor_Fill(Range("Flashing_color")) 'Flashing color
-                tBx1.BackColor = GetRGBColor_Fill(Range("Flashing_color")) 'Flashing color
+                PomodoroTimer.BackColor = GetRGBColor_Fill(ThisWorkbook.Sheets("Settings").Range("Flashing_color")) 'Flashing color
+                TextBox2.BackColor = GetRGBColor_Fill(ThisWorkbook.Sheets("Settings").Range("Flashing_color")) 'Flashing color
+                tBx1.BackColor = GetRGBColor_Fill(ThisWorkbook.Sheets("Settings").Range("Flashing_color")) 'Flashing color
             Else
                 PomodoroTimer.BackColor = -2147483633 'Normal color
                 TextBox2.BackColor = -2147483633 'Normal color
@@ -184,9 +199,9 @@ Private Sub TakeBreak2()
     If StopTimer = False Then
         If ThisWorkbook.Sheets("Settings").Range("Sound_end_Break") = True Then Beep
         'Remain in color to get the user's attention
-        PomodoroTimer.BackColor = GetRGBColor_Fill(Range("Flashing_color")) 'Flashing color
-        TextBox2.BackColor = GetRGBColor_Fill(Range("Flashing_color")) 'Flashing color
-        tBx1.BackColor = GetRGBColor_Fill(Range("Flashing_color")) 'Flashing color
+        PomodoroTimer.BackColor = GetRGBColor_Fill(ThisWorkbook.Sheets("Settings").Range("Flashing_color")) 'Flashing color
+        TextBox2.BackColor = GetRGBColor_Fill(ThisWorkbook.Sheets("Settings").Range("Flashing_color")) 'Flashing color
+        tBx1.BackColor = GetRGBColor_Fill(ThisWorkbook.Sheets("Settings").Range("Flashing_color")) 'Flashing color
     Else
         PomodoroTimer.BackColor = -2147483633 'Normal color
         TextBox2.BackColor = -2147483633 'Normal color
@@ -209,8 +224,14 @@ End Sub
 
 Private Sub CommandButton2_Click()
 If OngoingTimer = False Then 'Start the timer
+    UFIsVisible = True 'The form must be visible
+    ThisWorkbook.Application.WindowState = xlMinimized
     CommandButton2.caption = "Cancel"
-    Call Launch_timer
+    If Not IsMac Then
+        Call Launch_timer
+    Else
+        Call Launch_timer_mac
+    End If
 Else 'Stop the timer
     StopTimer = True
     OngoingTimer = False
@@ -232,7 +253,7 @@ Private Sub UserForm_QueryClose(Cancel As Integer, CloseMode As Integer)
     'At this point, since the user clicked on the userform to close it. Excel is the active window, but it might not be on top.
     'Make Excel the active window (optional)
     On Error Resume Next
-    If ThisWorkbook.Sheets("Settings").Range("Reopen_Excel_after_x").Value2 = True Then
+    If ThisWorkbook.Sheets("Settings").Range("Reopen_Excel_after_x").Value2 = True And Not IsMac Then
         Call AppActivate(Wkb.Application.caption, True)
         ShowWindow GetForegroundWindow, SW_SHOWMAXIMIZED
     End If
@@ -268,4 +289,8 @@ Private Sub AlwaysOnTop(caption As String)
         
     End If
     
+End Sub
+
+Private Sub UserForm_Terminate()
+    UFIsVisible = False
 End Sub

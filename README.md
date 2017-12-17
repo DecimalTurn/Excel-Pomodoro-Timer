@@ -1,5 +1,5 @@
 # excel-pomodoro-timer
-Excel Pomodoro Timer for Windows
+Excel Pomodoro Timer for Windows and Mac
 
 This Project offers a simple Excel Timer for the Pomodoro Technique.
 More details: https://en.wikipedia.org/wiki/Pomodoro_Technique

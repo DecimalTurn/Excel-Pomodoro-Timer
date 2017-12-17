@@ -3,11 +3,16 @@ Attribute VB_Name = "API_Sleep"
 
 Option Explicit
 
-#If VBA7 Then
+#If VBA7 Then ' Excel 2010 or later for Windows
+
     Public Declare PtrSafe Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long) 'For 64 Bit Systems
-#Else
+
+#Else ' pre Excel 2010 for Windows
+    
     Public Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long) 'For 32 Bit Systems
+
 #End If
+
 
 Sub SleepTest()
 'MsgBox "Execution is started"

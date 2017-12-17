@@ -1,6 +1,6 @@
 Attribute VB_Name = "API_AlwaysOnTop"
-'PURPOSE: This module includes the functions used to make sure that the Timer stays on top of all windows.
 'REFERENCE: https://www.mrexcel.com/forum/excel-questions/386643-userform-always-top-2.html
+'PURPOSE: This module includes the functions used to make sure that the Timer stays on top of all windows.
 
 Option Explicit
 
@@ -17,8 +17,11 @@ End Enum
 
 'https://msdn.microsoft.com/en-us/library/office/gg264421.aspx
 '64-Bit Visual Basic for Applications Overview
+'See also: https://sysmod.wordpress.com/2016/09/03/conditional-compilation-vba-excel-macwin3264/
+'For Mac declarations
 
-#If VBA7 Then
+
+#If VBA7 Then ' Excel 2010 or later for Windows
 
     'VBA version 7 compiler, therefore >= Office 2010
     'PtrSafe means function works in 32-bit and 64-bit Office
@@ -27,7 +30,7 @@ End Enum
     Public Declare PtrSafe Function SetWindowPos Lib "user32" _
         (ByVal hWnd As LongPtr, _
         ByVal hWndInsertAfter As LongPtr, _
-        ByVal x As Long, _
+        ByVal X As Long, _
         ByVal Y As Long, _
         ByVal cx As Long, _
         ByVal cy As Long, _
@@ -37,8 +40,7 @@ End Enum
         (ByVal lpClassName As String, _
         ByVal lpWindowName As String) As LongPtr
 
-#Else
-    
+#Else ' pre Excel 2010 for Windows
     'VBA version 6 or earlier compiler, therefore <= Office 2007
     
     Public Declare Function SetWindowPos Lib "user32" _
@@ -55,3 +57,6 @@ End Enum
         ByVal lpWindowName As String) As Long
 
 #End If
+
+
+

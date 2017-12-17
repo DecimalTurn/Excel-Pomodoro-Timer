@@ -13,6 +13,7 @@ Public CloseTimer As Boolean 'User clicked the X
 Public OngoingTimer As Boolean  'Take the value true after the timer has started (was initialized)
 Public StartTime As Variant
 Public TodaysDate As Variant
+Public UFIsVisible As Boolean
 
 Sub PomodoroSession()
     AllowedTime = Range("Pomodoro")
@@ -20,10 +21,12 @@ Sub PomodoroSession()
     BreakTime = Range("Break")
     BreakTimeSec = Range("Break_sec")
     AutoLaunch = True
-    If Range("Run_in_seperate_instance").Value = True And Reopen_decision = True Then
-        MsgBox "To let you work with Excel while the timer is running, this file will now be reopened in a second instance of Excel." & vbNewLine & _
-        "Once it was has been reopened, you will need to relaunch the timer."
-        Call OpenItSelfInAnotherInstance
+    If Not IsMac Then
+        If Range("Run_in_seperate_instance").Value = True And Reopen_decision = True Then
+            MsgBox "To let you work with Excel while the timer is Reopen_decisionrunning, this file will now be reopen in a second instance of Excel." & vbNewLine & _
+            "Once, the file has been reopened, you will need to relaunch the timer."
+            Call OpenItSelfInAnotherInstance
+        End If
     End If
     ThisWorkbook.Application.WindowState = xlMinimized
     PomodoroTimer.Show vbModeless
