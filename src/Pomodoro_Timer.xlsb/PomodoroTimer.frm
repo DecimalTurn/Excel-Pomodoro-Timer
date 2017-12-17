@@ -51,16 +51,18 @@ Private Sub UserForm_Initialize()
     End If
     
     If AutoLaunch Then
-        If Not IsMac Then
-            Call Launch_timer
-        Else
+        If IsMac Then
             Call Launch_timer_mac
         End If
     End If
 
 End Sub
 Private Sub UserForm_Activate()
-    'Nothing
+        If AutoLaunch Then
+            If Not IsMac Then
+                Call Launch_timer
+            End If
+        End If
 End Sub
 
 Private Sub Launch_timer()
