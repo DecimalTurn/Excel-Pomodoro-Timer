@@ -14,7 +14,7 @@ End Sub
 
 Sub new_record_test()
 
-Call Add_new_record(Date, Now, Now, True, "TaskName")
+    Call Add_new_record(Date, Now, Now, True, "TaskName")
 
 End Sub
 
