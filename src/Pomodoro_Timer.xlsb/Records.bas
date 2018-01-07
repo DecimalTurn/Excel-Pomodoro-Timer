@@ -5,11 +5,30 @@ Sub Clear_all_records()
     Dim sht As Worksheet
     Set sht = Sheets("Pomodoro")
     
+    'Ask the user if an ARCHIVED version should be saved
+    Dim Decision As Boolean, ireply As Variant
+    ireply = MsgBox(prompt:="Would you like to save your records in an ARCHIVED file.", Buttons:=vbYesNoCancel, Title:="Decision")
+    
+    If ireply = vbYes Then
+        Decision = True
+    ElseIf ireply = vbNo Then
+        Decision = False
+    Else 'They cancelled (VbCancel)
+        Exit Sub
+    End If
+    
+    If Decision = True Then
+        Call Achive_records(sht)
+    End If
+    
+    'Clear the content of the table
     Dim topleft As Range, bottomright As Range
     Set topleft = sht.Range("A1").End(xlDown).Offset(1, 0)
     Set bottomright = sht.Cells.SpecialCells(xlCellTypeLastCell).Offset(10, 0)
     
     Range(topleft, bottomright).ClearContents
+    sht.Range("TaskNameRng").ClearContents
+
 End Sub
 
 Sub new_record_test()
@@ -66,5 +85,20 @@ End Sub
 Sub Clear_Recent_Tasks()
     
     Range(Sheets("Recent").Cells(2, 1), Sheets("Recent").Cells(LastCell_row(Sheets("Recent")), 1)).ClearContents
+    
+    'Refill the dummy task names
+    Sheets("Recent").Cells(2, 1).Value2 = "Check emails"
+    Sheets("Recent").Cells(3, 1).Value2 = "Make phone call"
+    Sheets("Recent").Cells(4, 1).Value2 = "Reading"
+
+End Sub
+
+Sub Achive_records(ByRef sht As Worksheet)
+
+    sht.Copy
+    With ActiveWorkbook
+        .SaveAs FileName:=ThisWorkbook.Path & "\Pomodoro_Timer_ARCHIVE_" & Format(Now, "YYYYMMDD") & ".xlsx", FileFormat:=xlOpenXMLWorkbook
+        .Close SaveChanges:=False
+    End With
 
 End Sub
