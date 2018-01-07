@@ -1,1 +1,9 @@
-*Pomodoro_Timer.xlsb
+########################
+# Ignore Excel files in the repository root
+########################
+/*.xlam
+/*.xlsm
+/*.xlsx
+/*.xla
+/*.xls
+/*.xlsb
