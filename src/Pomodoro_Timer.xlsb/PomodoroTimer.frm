@@ -13,6 +13,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+
 'Countdown timer
 'REFERENCE: https://www.mrexcel.com/forum/excel-questions/594922-countdown-timer-userform.html
 

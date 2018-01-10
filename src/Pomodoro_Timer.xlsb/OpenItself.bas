@@ -128,47 +128,47 @@ Dim choice_vr As String
     choice_vr = i(1) & i(2) & i(3) & i(4) & i(5)
     'Now that we have all the relevant information to treat our decision tree, we can proceed
     
-    Dim DECISION As Boolean
+    Dim Decision As Boolean
     
     Select Case choice_vr 'See the open itself example file to view the decision tree
-    Case Is = "00000": DECISION = 0
-    Case Is = "00010": DECISION = 0
-    Case Is = "00100": DECISION = 0
-    Case Is = "00110": DECISION = 0
-    Case Is = "01000": DECISION = 0
-    Case Is = "01010": DECISION = 0
-    Case Is = "01100": DECISION = 0
-    Case Is = "01110": DECISION = 0
-    Case Is = "10000": DECISION = 0
-    Case Is = "10010": DECISION = 0
-    Case Is = "10100": DECISION = 0
-    Case Is = "10110": DECISION = 0
-    Case Is = "11000": DECISION = 0
-    Case Is = "11010": DECISION = 0
-    Case Is = "11100": DECISION = 0
-    Case Is = "11110": DECISION = 0
+    Case Is = "00000": Decision = 0
+    Case Is = "00010": Decision = 0
+    Case Is = "00100": Decision = 0
+    Case Is = "00110": Decision = 0
+    Case Is = "01000": Decision = 0
+    Case Is = "01010": Decision = 0
+    Case Is = "01100": Decision = 0
+    Case Is = "01110": Decision = 0
+    Case Is = "10000": Decision = 0
+    Case Is = "10010": Decision = 0
+    Case Is = "10100": Decision = 0
+    Case Is = "10110": Decision = 0
+    Case Is = "11000": Decision = 0
+    Case Is = "11010": Decision = 0
+    Case Is = "11100": Decision = 0
+    Case Is = "11110": Decision = 0
 
-    Case Is = "00001": DECISION = 1
-    Case Is = "00011": DECISION = 0
-    Case Is = "00101": DECISION = 1
-    Case Is = "00111": DECISION = 0
-    Case Is = "01001": DECISION = 1
-    Case Is = "01011": DECISION = 1
-    Case Is = "01101": DECISION = 1
-    Case Is = "01111": DECISION = 0
-    Case Is = "10001": DECISION = 1
-    Case Is = "10011": DECISION = 1
-    Case Is = "10101": DECISION = 1
-    Case Is = "10111": DECISION = 1
-    Case Is = "11001": DECISION = 1
-    Case Is = "11011": DECISION = 1
-    Case Is = "11101": DECISION = 1
-    Case Is = "11111": DECISION = 1
+    Case Is = "00001": Decision = 1
+    Case Is = "00011": Decision = 0
+    Case Is = "00101": Decision = 1
+    Case Is = "00111": Decision = 0
+    Case Is = "01001": Decision = 1
+    Case Is = "01011": Decision = 1
+    Case Is = "01101": Decision = 1
+    Case Is = "01111": Decision = 0
+    Case Is = "10001": Decision = 1
+    Case Is = "10011": Decision = 1
+    Case Is = "10101": Decision = 1
+    Case Is = "10111": Decision = 1
+    Case Is = "11001": Decision = 1
+    Case Is = "11011": Decision = 1
+    Case Is = "11101": Decision = 1
+    Case Is = "11111": Decision = 1
 
     Case Else: Err.Raise 13
     End Select
 
-    Reopen_decision = DECISION
+    Reopen_decision = Decision
 
 End Function
 
