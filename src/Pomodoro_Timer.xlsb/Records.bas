@@ -71,15 +71,35 @@ End Sub
 
 Sub Add_task(ByVal TaskName As String)
 
-    Dim X As Variant
+    Dim x As Variant
     On Error Resume Next
-    X = Application.Match(TaskName, Range("Recent_Tasks").Value2, 0)
+    x = Application.Match(TaskName, Range("Recent_Tasks").Value2, 0)
     On Error GoTo 0
     
-    If IsError(X) Then
+    If IsError(x) Then
         Sheets("Recent").Cells(LastCell_row(Sheets("Recent")) + 1, 1).Value2 = TaskName
     End If
     
+    'Reapply data validation
+    On Error Resume Next
+    Dim tstrng As Range, tststr As String
+    tststr = tstrng.Validation.Formula1
+    On Error GoTo 0
+    If tststr = vbNullString Then
+        With Sheets("Pomodoro").Range("TaskNameRng").Validation
+            .Delete
+            .Add Type:=xlValidateList, AlertStyle:=xlValidAlertStop, Operator:= _
+            xlBetween, Formula1:="=Recent_Tasks"
+            .IgnoreBlank = True
+            .InCellDropdown = True
+            .InputTitle = ""
+            .ErrorTitle = ""
+            .InputMessage = ""
+            .ErrorMessage = ""
+            .ShowInput = True
+            .ShowError = True
+        End With
+    End If
 End Sub
 
 Sub Clear_Recent_Tasks()
@@ -87,9 +107,9 @@ Sub Clear_Recent_Tasks()
     Range(Sheets("Recent").Cells(2, 1), Sheets("Recent").Cells(LastCell_row(Sheets("Recent")), 1)).ClearContents
     
     'Refill the dummy task names
-    Sheets("Recent").Cells(2, 1).Value2 = "Check emails"
-    Sheets("Recent").Cells(3, 1).Value2 = "Make phone call"
-    Sheets("Recent").Cells(4, 1).Value2 = "Reading"
+'    Sheets("Recent").Cells(2, 1).Value2 = "Check emails"
+'    Sheets("Recent").Cells(3, 1).Value2 = "Make phone call"
+'    Sheets("Recent").Cells(4, 1).Value2 = "Reading"
 
 End Sub
 
@@ -100,5 +120,11 @@ Sub Achive_records(ByRef sht As Worksheet)
         .SaveAs FileName:=ThisWorkbook.Path & "\Pomodoro_Timer_ARCHIVE_" & Format(Now, "YYYYMMDD") & ".xlsx", FileFormat:=xlOpenXMLWorkbook
         .Close SaveChanges:=False
     End With
+
+End Sub
+
+Sub Refresh_Summary_PivotTable()
+    
+    Sheets("Summary").PivotTables("PivotTable1").PivotCache.Refresh
 
 End Sub
