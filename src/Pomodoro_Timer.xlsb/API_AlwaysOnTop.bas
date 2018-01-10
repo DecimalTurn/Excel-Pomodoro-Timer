@@ -30,7 +30,7 @@ End Enum
     Public Declare PtrSafe Function SetWindowPos Lib "user32" _
         (ByVal hWnd As LongPtr, _
         ByVal hWndInsertAfter As LongPtr, _
-        ByVal X As Long, _
+        ByVal x As Long, _
         ByVal Y As Long, _
         ByVal cx As Long, _
         ByVal cy As Long, _
