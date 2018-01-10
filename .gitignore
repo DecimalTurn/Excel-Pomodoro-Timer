@@ -9,11 +9,6 @@
 /*.xlsb
 
 ########################
-# Exception
-########################
-!Assembler.xls
-
-########################
 # Ignore specific files 
 ########################
 *XMLsource\xl\vbaProject.bin
