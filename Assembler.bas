@@ -27,7 +27,7 @@ Sub Assemble()
     End If
 
     On Error Resume Next
-    Workbooks(SHORT_NAME & EXT).Close
+        Workbooks(SHORT_NAME & EXT).Close SaveChanges:=False
     On Error GoTo 0
     
     Dim wb As Workbook
@@ -38,6 +38,7 @@ Sub Assemble()
     Dim sht2 As Worksheet
     Dim sht3 As Worksheet
     Dim sht4 As Worksheet
+    Dim tmpRng As Range
     
     Set sht1 = wb.Sheets.Add
     sht1.Name = "Pomodoro"
@@ -140,12 +141,14 @@ Sub Assemble()
     
     'Buttons
     Dim bt1 As Button
-    Set bt1 = sht.Buttons.Add(0.6, 15.6, 112.2, 27.6)
+    Set tmpRng = Range("A2:B3")
+    Set bt1 = sht.Buttons.Add(Left:=tmpRng.Left, Top:=tmpRng.Top, Width:=tmpRng.Width, Height:=tmpRng.Height)
     bt1.OnAction = "Pomodoro_Timer.xlsb!PomodoroSession"
     bt1.Text = "Start"
     
     Dim bt2 As Button
-    Set bt2 = sht.Buttons.Add(1.8, 56.4, 111, 30)
+    Set tmpRng = Range("A5:B6")
+    Set bt2 = sht.Buttons.Add(Left:=tmpRng.Left, Top:=tmpRng.Top, Width:=tmpRng.Width, Height:=tmpRng.Height)
     bt2.OnAction = "Pomodoro_Timer.xlsb!Clear_all_records"
     bt2.Text = "Clear Records"
     
