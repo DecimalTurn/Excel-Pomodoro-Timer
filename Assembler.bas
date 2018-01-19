@@ -133,7 +133,7 @@ Sub Assemble()
         .InputMessage = ""
         .ErrorMessage = ""
         .ShowInput = True
-        .ShowError = True
+        .ShowError = False
     End With
     
     'Table
@@ -298,7 +298,7 @@ Sub Assemble()
     
     sht.Range("B13:B14").Style = "Percent"
     
-    'Datavalidation
+    'Data validation
     sht.Select
     Range("B2").Select
     With Selection.Validation
