@@ -80,26 +80,6 @@ Sub Add_task(ByVal TaskName As String)
         Sheets("Recent").Cells(LastCell_row(Sheets("Recent")) + 1, 1).Value2 = TaskName
     End If
     
-    'Reapply data validation
-    On Error Resume Next
-    Dim tstrng As Range, tststr As String
-    tststr = tstrng.Validation.Formula1
-    On Error GoTo 0
-    If tststr = vbNullString Then
-        With Sheets("Pomodoro").Range("TaskNameRng").Validation
-            .Delete
-            .Add Type:=xlValidateList, AlertStyle:=xlValidAlertStop, Operator:= _
-            xlBetween, Formula1:="=Recent_Tasks"
-            .IgnoreBlank = True
-            .InCellDropdown = True
-            .InputTitle = ""
-            .ErrorTitle = ""
-            .InputMessage = ""
-            .ErrorMessage = ""
-            .ShowInput = True
-            .ShowError = True
-        End With
-    End If
 End Sub
 
 Sub Clear_Recent_Tasks()
