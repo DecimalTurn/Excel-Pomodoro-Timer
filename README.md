@@ -1,9 +1,15 @@
-# Excel Pomodoro Timer for Windows and Mac
+# Excel Pomodoro Timer
 
 This Project offers a simple Excel Timer for the Pomodoro Technique.
 More details on the Pomodoro Technique: 
 - https://en.wikipedia.org/wiki/Pomodoro_Technique
 - https://www.sky-spiral.com/an-evaluation-of-the-pomodoro-technique/
+
+# Compatibility
+
+Excel for Windows: Full compatibility
+
+Excel for Mac: Partial compatibility
 
 # Installation
 
