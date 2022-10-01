@@ -1,4 +1,4 @@
-Attribute VB_Name = "UDF_LastCell"
+Attribute VB_Name = "fctLastCell"
 Option Explicit
 
 Function LastCell_row(sht As Worksheet) As Long

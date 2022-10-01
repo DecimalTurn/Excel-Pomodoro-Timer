@@ -1,4 +1,4 @@
-Attribute VB_Name = "API_Pixel"
+Attribute VB_Name = "winPixel"
 'PURPOSE: This module have functions to help convert pixels to points in Excel, allowing to scale things.
 'REFERENCE: http://www.vbaexpress.com/forum/showthread.php?21896-Pixel-to-Point-ratio
 

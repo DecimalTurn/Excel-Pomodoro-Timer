@@ -1,4 +1,4 @@
-Attribute VB_Name = "API_WorkArea"
+Attribute VB_Name = "winWorkArea"
 'PURPOSE: Get screen size in pixels
 'REFERENCE: https://www.excelforum.com/excel-programming-vba-macros/565556-why-does-spi_getworkarea-come-in-too-large.html
 

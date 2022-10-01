@@ -1,4 +1,4 @@
-Attribute VB_Name = "VBA_Optimize"
+Attribute VB_Name = "vbaOptimizeRuntime"
 Option Explicit
 
 Sub Optimize_VBA_Performance(ByVal Optimize As Boolean, Optional Calculation As Variant)

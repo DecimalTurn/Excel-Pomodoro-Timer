@@ -1,4 +1,4 @@
-Attribute VB_Name = "API_AlwaysOnTop"
+Attribute VB_Name = "winAlwaysOnTop"
 'REFERENCE: https://www.mrexcel.com/forum/excel-questions/386643-userform-always-top-2.html
 'PURPOSE: This module includes the functions used to make sure that the Timer stays on top of all windows.
 

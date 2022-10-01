@@ -1,4 +1,4 @@
-Attribute VB_Name = "UDF_RGB"
+Attribute VB_Name = "fctRGB"
 Function GetRGBColor_Fill(ByVal MyCell As Range) As Variant
 'PURPOSE: Output the RGB color code from the specified cell
 'REFERENCE: www.TheSpreadsheetGuru.com

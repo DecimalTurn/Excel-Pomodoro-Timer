@@ -1,4 +1,4 @@
-Attribute VB_Name = "UDF_ExcelIntances"
+Attribute VB_Name = "fctExcelIntances"
 'PURPOSE: The functions in this module are used to calculate the number of Excel instances currently open
 
 Option Explicit

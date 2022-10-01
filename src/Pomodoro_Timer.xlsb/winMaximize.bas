@@ -1,4 +1,4 @@
-Attribute VB_Name = "API_Maximize"
+Attribute VB_Name = "winMaximize"
 'PURPOSE: Contain function that allows to maximize or minimize a window.
 'REFERENCE: http://www.vbaexpress.com/forum/archive/index.php/t-36677.html
 
@@ -30,3 +30,11 @@ Public Const SW_SHOWDEFAULT = 10
 Public Const SW_MAX = 10
 
 
+Sub MinimizeWaitAndMaximize()
+
+    Dim h As LongPtr
+    h = GetForegroundWindow
+    ShowWindow h, SW_SHOWMINIMIZED
+    Sleep 5000
+    ShowWindow h, SW_MAXIMIZE
+End Sub
