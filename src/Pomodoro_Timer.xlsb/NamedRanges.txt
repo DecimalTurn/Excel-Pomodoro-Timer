@@ -1,3 +1,4 @@
+Archive!_FilterDatabase;=Archive!$A$8:$F$964;
 Break;=Settings!$B$4;
 Break_sec;=Settings!$B$5;
 Custom_position;=Settings!$B$12;
@@ -16,3 +17,4 @@ Sound_end_Pomodoro;=Settings!$B$10;
 TaskNameRng;=Pomodoro!$E$2;
 Top_pos;=Settings!$B$14;
 TopLeftCorner;=Table24[[#Headers],[Date]];
+TopLeftCornerA;=Archive!$A$8;

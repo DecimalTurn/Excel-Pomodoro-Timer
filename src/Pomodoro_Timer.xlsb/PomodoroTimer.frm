@@ -3,8 +3,8 @@ Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} PomodoroTimer
    Caption         =   "Timer"
    ClientHeight    =   924
    ClientLeft      =   120
-   ClientTop       =   468
-   ClientWidth     =   2196
+   ClientTop       =   465
+   ClientWidth     =   2190
    OleObjectBlob   =   "PomodoroTimer.frx":0000
    StartUpPosition =   1  'CenterOwner
 End
@@ -68,9 +68,7 @@ Private Sub UserForm_Activate()
 End Sub
 
 Private Sub Launch_timer()
-    'Stop the code if the form is not visible
-    If UFIsVisible = False Then: Debug.Print "Form is not visible. The code will now stop.": End
-    
+        
     Dim calc_iniset As Variant: calc_iniset = Application.Calculation
     Call Optimize_VBA_Performance(True)
     
@@ -99,6 +97,7 @@ Private Sub Launch_timer()
     
     
     Do
+        
         RemaingTime = DateDiff("s", Now(), EndTime)
         M = Int(RemaingTime / 60)
         S = RemaingTime - 60 * M
@@ -112,6 +111,9 @@ Private Sub Launch_timer()
         
         'Now sleep for 0.1 sec
         Call Sleep(sleeptime)
+        
+        'Stop the code if the form is not visible
+        If UFIsVisible = False Then: Debug.Print "Form is not visible. The code will now stop.": End
         
     Loop Until RemaingTime <= 0 Or StopTimer
     
@@ -237,7 +239,7 @@ If OngoingTimer = False Then 'Start the timer
 Else 'Stop the timer
     StopTimer = True
     OngoingTimer = False
-    'No need to unload the userform here since the main procedure (Launch_timer) will take care of that
+    'No need to unload the userform here since the main procedure (Launch_timer) will take care of that as long as we are still in the loop
     'Unload Me
 End If
     
@@ -260,6 +262,9 @@ Private Sub UserForm_QueryClose(Cancel As Integer, CloseMode As Integer)
         ShowWindow GetForegroundWindow, SW_SHOWMAXIMIZED
     End If
     On Error GoTo 0
+    
+    'Make sure that the form isn't considered visible anymore
+    UFIsVisible = False
     
 End Sub
 

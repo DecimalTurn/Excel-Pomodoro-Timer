@@ -2,12 +2,15 @@ Attribute VB_Name = "Records"
 Option Explicit
 
 Sub Clear_all_records()
-    Dim sht As Worksheet
+'PURPOSE: Copy current records to Archive sheet (if user selects yes) and clear records
+
+    Dim sht As Worksheet, arcsht As Worksheet
     Set sht = Sheets("Pomodoro")
+    Set arcsht = Sheets("Archive")
     
     'Ask the user if an ARCHIVED version should be saved
     Dim Decision As Boolean, ireply As Variant
-    ireply = MsgBox(prompt:="Would you like to save your records in an ARCHIVED file.", Buttons:=vbYesNoCancel, Title:="Decision")
+    ireply = MsgBox(prompt:="Would you like to save your records to the Archive sheet.", Buttons:=vbYesNoCancel, Title:="Decision")
     
     If ireply = vbYes Then
         Decision = True
@@ -16,18 +19,34 @@ Sub Clear_all_records()
     Else 'They cancelled (VbCancel)
         Exit Sub
     End If
-    
-    If Decision = True Then
-        Call Achive_records(sht)
-    End If
-    
-    'Clear the content of the table
-    Dim topleft As Range, bottomright As Range
+       
+    Dim topleft As Range, bottomright As Range, SrcRange As Range
     Set topleft = sht.Range("A1").End(xlDown).Offset(1, 0)
     Set bottomright = sht.Cells.SpecialCells(xlCellTypeLastCell).Offset(10, 0)
-    
-    Range(topleft, bottomright).ClearContents
-    sht.Range("TaskNameRng").ClearContents
+    Set SrcRange = Range(topleft, bottomright)
+       
+    If Decision = True Then
+
+        'Destination Range (Just the top left cell)
+        'Find where to add the lines for archive
+        Dim rnb As Long
+        Dim c As Variant
+        For Each c In arcsht.Range(arcsht.Cells(Range("TopLeftCornerA").Row + 1, 1), arcsht.Cells(LastCell_row(arcsht) + 1, 1))
+            If IsEmpty(c) Then
+                rnb = c.Row
+                Exit For
+            End If
+        Next c
+        
+        Dim DestTopLeftRange As Range
+        Set DestTopLeftRange = arcsht.Cells(rnb, 1)
+        
+        Call VBACopyPaste(SrcRange, DestTopLeftRange)
+
+    End If
+        
+    'Clear the content of the table
+    SrcRange.ClearContents
 
 End Sub
 
@@ -93,10 +112,11 @@ Sub Clear_Recent_Tasks()
 
 End Sub
 
-Sub Achive_records(ByRef sht As Worksheet)
+Sub Export_records()
 
-    sht.Copy
+    Sheets("Archive").Copy
     With ActiveWorkbook
+        .ActiveSheet.Buttons("Button 1").Delete
         .SaveAs FileName:=ThisWorkbook.Path & "\Pomodoro_Timer_ARCHIVE_" & Format(Now, "YYYYMMDD") & ".xlsx", FileFormat:=xlOpenXMLWorkbook
         .Close SaveChanges:=False
     End With
@@ -106,5 +126,21 @@ End Sub
 Sub Refresh_Summary_PivotTable()
     
     Sheets("Summary").PivotTables("PivotTable1").PivotCache.Refresh
+
+End Sub
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' VBA Utilities
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+Private Sub VBACopyPaste(ByRef SrcRange As Range, ByRef DestTopLeftRange As Range)
+    
+    Dim DestRange As Range
+    Dim VBAClipBoard() As Variant
+
+    Set DestRange = DestTopLeftRange.Cells(1, 1) 'Must be one cell
+    VBAClipBoard = SrcRange
+    Range(DestTopLeftRange, DestTopLeftRange.Offset(UBound(VBAClipBoard, 1) - 1, UBound(VBAClipBoard, 2) - 1)).Value2 = VBAClipBoard
+    Erase VBAClipBoard
 
 End Sub

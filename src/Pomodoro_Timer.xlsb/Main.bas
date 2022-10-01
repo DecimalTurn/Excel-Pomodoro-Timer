@@ -27,7 +27,7 @@ Sub PomodoroSession()
             Resp = MsgBox("To let you work with Excel while the timer is running, this file will now be reopen in a second instance of Excel." & vbNewLine & _
             "Once, the file has been reopened, you will need to relaunch the timer.", vbOKCancel)
             If Resp = 1 Then
-                If ThisWorkbook.Saved = False Then thisworbook.Save
+                If ThisWorkbook.Saved = False Then ThisWorkbook.Save
                 Call OpenItSelfInAnotherInstance
             Else 'Cancel or X
                 Exit Sub
@@ -35,8 +35,11 @@ Sub PomodoroSession()
         End If
     End If
     ThisWorkbook.Application.WindowState = xlMinimized
-    PomodoroTimer.Show vbModeless
-    'Note:vbModeless as opposed to vbModal will allow the Excel application to be unlocked while the timer is running
+    On Error GoTo ErrHandler
+    PomodoroTimer.Show vbModeless 'Note:vbModeless as opposed to vbModal will allow the Excel application to be unlocked while the timer is running
+    Exit Sub
+ErrHandler:
+    Unload PomodoroTimer
 End Sub
 
 
