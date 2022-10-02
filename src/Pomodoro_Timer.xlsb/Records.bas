@@ -27,6 +27,11 @@ Sub Clear_all_records()
        
     If Decision = True Then
 
+        'We need to remove error filtering to avoid errors when inserting data
+        On Error Resume Next
+          arcsht.ShowAllData
+        On Error GoTo 0
+
         'Destination Range (Just the top left cell)
         'Find where to add the lines for archive
         Dim rnb As Long
