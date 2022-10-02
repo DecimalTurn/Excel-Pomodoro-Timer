@@ -25,7 +25,7 @@ Right As Long
 Bottom As Long
 End Type
 
-Function GETWORKAREA_HEIGHT() As Double
+Public Function GETWORKAREA_HEIGHT() As Double
 'PURPOSE: Get the screen size exluding the taskbar
     Dim nRect As RECT
     SystemParametersInfo SPI_GETWORKAREA, 0, nRect, 0
@@ -33,7 +33,7 @@ Function GETWORKAREA_HEIGHT() As Double
 End Function
 
 
-Function GETWORKAREA_WIDTH() As Double
+Public Function GETWORKAREA_WIDTH() As Double
 'PURPOSE: Get the screen size exluding the taskbar
     Dim nRect As RECT
     SystemParametersInfo SPI_GETWORKAREA, 0, nRect, 0

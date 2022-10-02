@@ -6,8 +6,8 @@ Option Explicit
 
 #If VBA7 Then
    
-    Declare PtrSafe Function ShowWindow Lib "user32" (ByVal hWnd As LongPtr, ByVal nCmdShow As Long) As Long
-    Declare PtrSafe Function GetForegroundWindow Lib "user32" () As LongPtr
+    Public Declare PtrSafe Function ShowWindow Lib "user32" (ByVal hWnd As LongPtr, ByVal nCmdShow As Long) As Long
+    Public Declare PtrSafe Function GetForegroundWindow Lib "user32" () As LongPtr
 #Else
     Declare Function ShowWindow Lib "user32" (ByVal hWnd As Long, ByVal nCmdShow As Long) As Long
     Declare Function GetForegroundWindow Lib "user32" () As Long
@@ -30,7 +30,7 @@ Public Const SW_SHOWDEFAULT = 10
 Public Const SW_MAX = 10
 
 
-Sub MinimizeWaitAndMaximize()
+Public Sub MinimizeWaitAndMaximize()
 
     Dim h As LongPtr
     h = GetForegroundWindow

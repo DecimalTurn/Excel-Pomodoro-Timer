@@ -14,7 +14,7 @@ Option Explicit
 #End If
 
 
-Sub SleepTest()
+Public Sub SleepTest()
 'MsgBox "Execution is started"
 Sleep 10000 'delay in milliseconds
 MsgBox "Waiting completed"
