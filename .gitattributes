@@ -1,10 +1,11 @@
 # Auto detect text files and perform LF normalization
-* text=auto
 
-# VBA extensions - Preseve CRLF in working directory
-*.bas text eol=crlf working-tree-encoding=CP1252
-*.cls text eol=crlf working-tree-encoding=CP1252
-*.frm text eol=crlf working-tree-encoding=CP1252
+# VBA extensions - Enforce CRLF using a filter
+  # To make sure the filter is active, run the command: git config include.path ../.gitconfig
+*.bas -text filter=crlf
+*.cls -text filter=crlf
+*.frm -text filter=crlf
 
-# VBA extensions - Mark as binary
-*.frx binary
+# Binary files (no line-ending conversions), diff using hexdump
+*.bin binary diff=hex
+*.frx binary diff=hex
