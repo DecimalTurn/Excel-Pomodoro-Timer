@@ -103,6 +103,7 @@ Public Function Reopen_decision() As Boolean
     If InFirst Then
         If xlApp.hWnd <> ThisWorkbook.Parent.hWnd Then NotInFirstActually = True
     End If
+    
 'Is the file alone?
     Dim Alone As Boolean
     If VisibleWorkbookNB = 1 Then Alone = True

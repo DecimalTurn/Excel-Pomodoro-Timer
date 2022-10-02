@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} PomodoroTimer 
    Caption         =   "Timer"
-   ClientHeight    =   924
+   ClientHeight    =   930
    ClientLeft      =   120
    ClientTop       =   465
    ClientWidth     =   2190
@@ -54,7 +54,7 @@ Private Sub UserForm_Initialize()
     
     If AutoLaunch Then
         If IsMac Then
-            Call Launch_timer_mac
+            Call LaunchTimerMac
         End If
     End If
 
@@ -234,7 +234,7 @@ If OngoingTimer = False Then 'Start the timer
     If Not IsMac Then
         Call Launch_timer
     Else
-        Call Launch_timer_mac
+        Call LaunchTimerMac
     End If
 Else 'Stop the timer
     StopTimer = True

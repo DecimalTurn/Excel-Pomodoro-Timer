@@ -3,7 +3,7 @@ Option Explicit
 
 Const FREQ = 1
 
-Sub Launch_timer_mac()
+Sub LaunchTimerMac()
     'Stop the code if the form is not visible
     If UFIsVisible = False Then: Debug.Print "Form is not visible. The code will now stop.": End
     
@@ -46,11 +46,11 @@ Sub Launch_timer_mac()
         'DoEvents
         
         'Now "sleep"
-        Application.OnTime Now + TimeValue("00:00:01") * FREQ, "Launch_timer_mac2"
+        Application.OnTime Now + TimeValue("00:00:01") * FREQ, "LaunchTimerMac2"
 
 End Sub
 
-Sub Launch_timer_mac2()
+Sub LaunchTimerMac2()
     Dim frm As UserForm
     Set frm = PomodoroTimer
     
@@ -82,7 +82,7 @@ Sub Launch_timer_mac2()
         'DoEvents
         
         'Now "sleep"
-        Application.OnTime Now + TimeValue("00:00:01") * FREQ, "Launch_timer_mac2"
+        Application.OnTime Now + TimeValue("00:00:01") * FREQ, "LaunchTimerMac2"
         
     Else
     

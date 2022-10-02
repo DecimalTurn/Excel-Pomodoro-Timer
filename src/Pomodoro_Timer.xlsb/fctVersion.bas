@@ -1,4 +1,4 @@
-Attribute VB_Name = "Version"
+Attribute VB_Name = "fctVersion"
 Option Explicit
 'REFERENCE: https://www.rondebruin.nl/mac/mac001.htm
 
