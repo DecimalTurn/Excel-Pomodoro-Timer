@@ -2,9 +2,9 @@
 * text=auto
 
 # VBA extensions - Preseve CRLF in working directory
-*.bas text eol=crlf
-*.cls text eol=crlf
-*.frm text eol=crlf
+*.bas text eol=crlf working-tree-encoding=CP1252
+*.cls text eol=crlf working-tree-encoding=CP1252
+*.frm text eol=crlf working-tree-encoding=CP1252
 
 # VBA extensions - Mark as binary
 *.frx binary
