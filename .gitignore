@@ -1,6 +1,7 @@
-########################
+# Excel temporary files
+~*
+
 # Ignore Excel files in the repository root
-########################
 /*.xlam
 /*.xlsm
 /*.xlsx
@@ -8,8 +9,5 @@
 /*.xls
 /*.xlsb
 
-########################
 # Ignore specific files 
-########################
 *XMLsource\xl\vbaProject.bin
-
