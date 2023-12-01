@@ -8,6 +8,7 @@
 *.[bB][aA][sS]      filter=crlf -text working-tree-encoding=CP1252 
 *.[cC][lL][sS]      filter=crlf -text working-tree-encoding=CP1252 
 *.[fF][rR][mM]      filter=crlf -text working-tree-encoding=CP1252
+*.[vV][bB][aA]      filter=crlf -text working-tree-encoding=CP1252
 
 # VBA extensions - Mark as binary
 *.[fF][rR][xX]      binary
