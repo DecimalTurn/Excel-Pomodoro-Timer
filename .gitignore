@@ -11,3 +11,7 @@
 
 # Ignore specific files 
 *XMLsource\xl\vbaProject.bin
+
+# Ignore shorcuts
+*.lnk
+
