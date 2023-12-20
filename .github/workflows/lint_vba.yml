@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - dev
   pull_request:
 jobs:
   test-and-static-analysis:
@@ -12,6 +13,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Lint
-      uses: Vba-actions/lint-vba@main
+      uses: DecimalTurn/lint-vba@main
       with:
         path: './src'
