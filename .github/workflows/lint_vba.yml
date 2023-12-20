@@ -1,0 +1,17 @@
+name: Lint VBA
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+jobs:
+  test-and-static-analysis:
+    name: Test and Static Analysis
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Lint
+      uses: Vba-actions/lint-vba@main
+      with:
+        path: './src'
