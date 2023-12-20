@@ -1,5 +1,5 @@
 Attribute VB_Name = "UDF_ExcelIntances"
-'PURPOSE: The functions in this module are used to calculate the number of Excel instances currently open
+'PURPOSE: The functions in this VBA module are used to calculate the number of Excel instances currently open
 
 Option Explicit
 
