@@ -15,6 +15,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 
 
+
 'Countdown timer
 'REFERENCE: https://www.mrexcel.com/forum/excel-questions/594922-countdown-timer-userform.html
 
@@ -125,7 +126,7 @@ Private Sub Launch_timer()
     
     'Recording session
     If StopTimer = False Or ss.Range("Record_unfinished").Value2 = True Then
-        If (TotalTime - RemaingTime) / 60 > ps.Range("No_Recording_limit") Then
+        If (TotalTime - RemaingTime) / 60 > ss.Range("No_Recording_limit") Then
             Add_new_record TodaysDate, StartTime, Now, Not (StopTimer), ps.Range("TaskNameRng")
         End If
     End If
