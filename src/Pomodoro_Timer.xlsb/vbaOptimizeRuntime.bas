@@ -14,4 +14,3 @@ Sub OptimizeVbaPerformance(ByVal Optimize As Boolean, Optional Calculation As Va
         .EnableEvents = Not (Optimize)
     End With
 End Sub
-

@@ -44,5 +44,3 @@ Public Sub PomodoroSession()
 ErrHandler:
     Unload PomodoroTimer
 End Sub
-
-

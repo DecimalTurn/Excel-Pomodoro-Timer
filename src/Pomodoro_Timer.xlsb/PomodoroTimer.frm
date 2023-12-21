@@ -71,7 +71,7 @@ Private Sub UserForm_Activate()
 End Sub
 
 Private Sub Launch_timer()
-        
+    
     Dim calc_iniset As Variant: calc_iniset = Application.Calculation
     OptimizeVbaPerformance True
     

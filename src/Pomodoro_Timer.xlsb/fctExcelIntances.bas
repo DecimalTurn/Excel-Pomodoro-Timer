@@ -48,5 +48,3 @@ Private Function ArrayCountif(arr As Variant, criteria As Variant) As Long
     End If
     ArrayCountif = i
 End Function
-
-

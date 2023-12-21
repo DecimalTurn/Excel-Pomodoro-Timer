@@ -57,6 +57,3 @@ End Enum
         ByVal lpWindowName As String) As Long
 
 #End If
-
-
-
