@@ -61,7 +61,7 @@ Public Sub new_record_test()
 
 End Sub
 
-Public Sub Add_new_record(Pdate As Date, Pstart As Date, Pend As Date, Pcompleted As Boolean, TaskName As String)
+Public Sub Add_new_record(ByVal Pdate As Date, ByVal Pstart As Date, ByVal Pend As Date, Pcompleted As Boolean, TaskName As String)
 
     Dim sht As Worksheet
     Set sht = ThisWorkbook.Sheets("Pomodoro")

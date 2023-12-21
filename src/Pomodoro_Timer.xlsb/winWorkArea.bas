@@ -19,10 +19,10 @@ Private Const SPI_GETWORKAREA = 48
 #End If
 
 Private Type RECT
-Left As Long
-Top As Long
-Right As Long
-Bottom As Long
+    Left As Long
+    Top As Long
+    Right As Long
+    Bottom As Long
 End Type
 
 Public Function GETWORKAREA_HEIGHT() As Double

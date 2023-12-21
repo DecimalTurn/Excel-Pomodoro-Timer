@@ -18,7 +18,7 @@ Public UFIsVisible As Boolean
 
 Public Sub PomodoroSession()
     Dim ws As Worksheet
-    Set ws = ThisWorkbook.Sheets("Pomodoro")
+    Set ws = ThisWorkbook.Sheets("Settings")
     AllowedTime = ws.Range("Pomodoro")
     AllowedTimeSec = ws.Range("Pomodoro_sec")
     BreakTime = ws.Range("Break")

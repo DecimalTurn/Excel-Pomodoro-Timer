@@ -175,7 +175,7 @@ End Function
 
 
 Public Function VisibleWorkbookNB() As Long
-Dim wb As Workbook, counter As Integer
+    Dim wb As Workbook, counter As Integer
     For Each wb In Excel.Application.Workbooks
         If wb.Windows(1).Visible = True Then
         counter = counter + 1

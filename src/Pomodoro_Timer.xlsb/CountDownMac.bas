@@ -111,7 +111,7 @@ Public Sub LaunchTimerMac2(ByVal Timer As PomodoroTimer)
             'Proceed with the Break
             If ThisWorkbook.Sheets("Settings").Range("Sound_end_Pomodoro") = True Then Beep
             ThisForm.TextBox2.Value = "Break"
-            TakeBreakMac
+            TakeBreakMac ThisForm
         Else
             'Do nothing
             ThisForm.CommandButton2.caption = "Start"
@@ -141,7 +141,7 @@ Private Sub TakeBreakMac(ByVal Timer As PomodoroTimer)
         .Value = Format$(CStr(M), "00") & ":" & Format$(CStr(S), "00")
     End With
 
-    TakeBreakMac2
+    TakeBreakMac2 ThisForm
 
 End Sub
 
