@@ -1,12 +1,56 @@
 # By default, auto detect text files and perform LF normalization
 * text=auto eol=lf
 
-# VBA extensions - Enforce CRLF using a filter
-  # To make sure the filter is active, run the command: git config include.path ../.gitconfig
-*.bas -text filter=crlf
-*.cls -text filter=crlf
-*.frm -text filter=crlf
+# Important: To make sure the crlf filter is active, run the following command at the root of the git repo: git config include.path ../.gitconfig
+# (The reason why we need the ".." is to move one directory up because the config file is located in the .git sufolder.)
 
-# Binary files (no line-ending conversions), diff using hexdump
-*.bin binary diff=hex
-*.frx binary diff=hex
+# VBA extensions - Enforce CRLF using a filter
+*.[bB][aA][sS]      filter=crlf -text working-tree-encoding=CP1252 
+*.[cC][lL][sS]      filter=crlf -text working-tree-encoding=CP1252 
+*.[fF][rR][mM]      filter=crlf -text working-tree-encoding=CP1252
+
+# VBA extensions - Mark as binary
+*.[fF][rR][xX]      binary
+# OR Binary files (no line-ending conversions), diff using hexdump
+# *.bin binary diff=hex
+# *.frx binary diff=hex
+                    
+# AutoHotKey - Enforce CRLF using a filter
+*.[aA][hH][kK]      filter=crlf -text
+
+# Batch scripts - Enforce CRLF using a filter
+*.[cC][mM][dD]      filter=crlf -text
+*.[bB][aA][tT]      filter=crlf -text
+*.[iI][cC][sS]      filter=crlf -text
+
+# Office documents
+*.[xX][lL][aA]      binary
+*.[xX][lL][aA][mM]  binary
+*.[xX][lL][sS]      binary
+*.[xX][lL][sS][bB]  binary
+*.[xX][lL][sS][mM]  binary
+*.[xX][lL][sS][xX]  binary
+*.[dD][oO][cC]      diff=astextplain
+*.[dD][oO][cC][xX]  diff=astextplain
+*.[pP][pP][tT]      binary
+*.[pP][pP][tT][xX]  binary                  
+
+# Images            
+*.[jJ][pP][gG]      binary
+*.[pP][nN][gG]      binary
+*.[bB][mM][pP]      binary
+*.[gG][iI][fF]      binary
+*.[iI][cC][oO]      binary
+
+# Compressed files
+*.[zZ][iI][pP]      binary
+*.[cC][aA][bB]      binary
+*.[7][zZ]           binary
+*.[gG][zZ]          binary
+
+# Executables
+*.[eE][xX][eE]      binary
+*.[dD][lL][lL]      binary
+
+# Other
+*.[pP][dD][fF]      diff=astextplain
