@@ -2,14 +2,14 @@ Attribute VB_Name = "Assembler"
 Option Explicit
 'Instructions
 
-'1. Create an Excel file called Assembler.xlsm in the same folder as Installer.bas:
+'1. Create an Excel file called Assembler.xlsm (for example) in the same folder as Installer.bas:
 '   *\Excel-Pomodoro-Timer\
 
 '2. Open the VB Editor (Alt+F11) right click on the Installer VB Project and choose Import a file and chose:
 '    *\Excel-Pomodoro-Timer\Assembler.bas
 
-'3. Run the Assemble macro from the module Assembler (Click somewhere inside the macro and press F5).
-'   Make sure to wait for the final confirmation message at the end before doing anything with Excel.
+'3. Run Assemble from the module Assembler (Click somewhere inside the macro and press F5).
+'   Make sure to wait for the confirmation message at the end before doing anything with Excel.
 
 '4. Use the tool vbaDeveloper (Available here: https://github.com/DecimalTurn/vbaDeveloper/releases) to import the VBA code.
 '   - Open vbaDeveloper.xlam

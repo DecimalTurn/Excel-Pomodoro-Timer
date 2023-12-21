@@ -2,12 +2,13 @@
 * text=auto eol=lf
 
 # Important: To make sure the crlf filter is active, run the following command at the root of the git repo: git config include.path ../.gitconfig
-# (The reason why we need the ".." is to move one directory up because the config file is located in the .git sufolder.)
+# (The reason why we need the ".." is to move one folder up because the config file is located in the .git subfolder.)
 
 # VBA extensions - Enforce CRLF using a filter
 *.[bB][aA][sS]      filter=crlf -text working-tree-encoding=CP1252 
 *.[cC][lL][sS]      filter=crlf -text working-tree-encoding=CP1252 
 *.[fF][rR][mM]      filter=crlf -text working-tree-encoding=CP1252
+*.[vV][bB][aA]      filter=crlf -text working-tree-encoding=CP1252
 
 # VBA extensions - Mark as binary
 *.[fF][rR][xX]      binary

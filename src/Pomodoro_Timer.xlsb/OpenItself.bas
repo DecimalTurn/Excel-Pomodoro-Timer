@@ -185,4 +185,3 @@ Dim wb As Workbook, counter As Integer
     VisibleWorkbookNB = counter
 End Function
 
-
