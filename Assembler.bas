@@ -265,7 +265,8 @@ Sub Assemble()
     sht.Cells(13, 1).Value2 = "Left position"
     sht.Cells(14, 1).Value2 = "Top position"
     sht.Cells(15, 1).Value2 = "Use shortcuts (F10)"
-    sht.Cells(16, 1).Value2 = "Flasing color"
+    sht.Cells(16, 1).Value2 = "Flashing color"
+    sht.Cells(17, 1).Value2 = "Timer always on top"
 
     sht.Cells(1, 2).Value2 = "Value"
     sht.Cells(2, 2).Value2 = 25
@@ -283,9 +284,10 @@ Sub Assemble()
     sht.Cells(14, 2).Value2 = 0.5
     sht.Cells(15, 2).Value2 = True
     sht.Cells(16, 2).Value2 = ""
+    sht.Cells(17, 2).Value2 = True
 
     'Table
-    sht.ListObjects.Add(xlSrcRange, sht.Range("$A$1:$B$16"), , xlYes).Name = "Table2"
+    sht.ListObjects.Add(xlSrcRange, sht.Range("$A$1:$B$17"), , xlYes).Name = "Table2"
     
     'Formatting
     With sht.Range("B16").Interior
@@ -300,7 +302,7 @@ Sub Assemble()
     
     'Data validation
     sht.Select
-    Range("B2").Select
+    sht.Range("B2").Select
     With Selection.Validation
         .Delete
         .Add Type:=xlValidateWholeNumber, AlertStyle:=xlValidAlertStop, _
@@ -496,8 +498,22 @@ Sub Assemble()
         .ShowInput = True
         .ShowError = True
     End With
+    Range("B17").Select
+    With Selection.Validation
+        .Delete
+        .Add Type:=xlValidateList, AlertStyle:=xlValidAlertStop, Operator:= _
+        xlBetween, Formula1:="TRUE,FALSE"
+        .IgnoreBlank = True
+        .InCellDropdown = True
+        .InputTitle = ""
+        .ErrorTitle = ""
+        .InputMessage = ""
+        .ErrorMessage = ""
+        .ShowInput = True
+        .ShowError = True
+    End With
 
-    Range("A1").Select
+    sht.Range("A1").Select
     
     Sheets("Pomodoro").Select
     wb.SaveAs Filename:=ThisWorkbook.Path & "\" & SHORT_NAME & EXT, FileFormat:=xlExcel12

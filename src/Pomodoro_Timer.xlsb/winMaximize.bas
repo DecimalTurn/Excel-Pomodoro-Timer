@@ -1,4 +1,4 @@
-Attribute VB_Name = "API_Maximize"
+Attribute VB_Name = "winMaximize"
 'PURPOSE: Contain function that allows to maximize or minimize a window.
 'REFERENCE: http://www.vbaexpress.com/forum/archive/index.php/t-36677.html
 
@@ -6,8 +6,8 @@ Option Explicit
 
 #If VBA7 Then
    
-    Declare PtrSafe Function ShowWindow Lib "user32" (ByVal hWnd As LongPtr, ByVal nCmdShow As Long) As Long
-    Declare PtrSafe Function GetForegroundWindow Lib "user32" () As LongPtr
+    Public Declare PtrSafe Function ShowWindow Lib "user32" (ByVal hWnd As LongPtr, ByVal nCmdShow As Long) As Long
+    Public Declare PtrSafe Function GetForegroundWindow Lib "user32" () As LongPtr
 #Else
     Declare Function ShowWindow Lib "user32" (ByVal hWnd As Long, ByVal nCmdShow As Long) As Long
     Declare Function GetForegroundWindow Lib "user32" () As Long
@@ -30,3 +30,11 @@ Public Const SW_SHOWDEFAULT = 10
 Public Const SW_MAX = 10
 
 
+Public Sub MinimizeWaitAndMaximize()
+
+    Dim h As LongPtr
+    h = GetForegroundWindow
+    ShowWindow h, SW_SHOWMINIMIZED
+    Sleep 5000
+    ShowWindow h, SW_MAXIMIZE
+End Sub

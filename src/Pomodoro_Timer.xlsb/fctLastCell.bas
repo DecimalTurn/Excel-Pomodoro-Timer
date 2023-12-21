@@ -1,7 +1,7 @@
-Attribute VB_Name = "UDF_LastCell"
+Attribute VB_Name = "fctLastCell"
 Option Explicit
 
-Function LastCell_row(sht As Worksheet) As Long
+Public Function LastCell_row(sht As Worksheet) As Long
 'PURPOSE: 'Calculate the last row of data based on column A.
 
     Dim tst As Range, rownb As Long, oldnb As Long

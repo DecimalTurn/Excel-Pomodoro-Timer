@@ -1,7 +1,7 @@
 Attribute VB_Name = "OpenItself"
 Option Explicit
 
-Sub OpenItSelfInAnotherInstance()
+Public Sub OpenItSelfInAnotherInstance()
     Dim objExcel As Excel.Application
     Set objExcel = CreateObject("Excel.Application")
     Dim FileName As String
@@ -30,7 +30,7 @@ Sub OpenItSelfInAnotherInstance()
     On Error GoTo 0
      
     On Error GoTo Err1
-    Call objExcel.Workbooks.Open(FileName)
+    objExcel.Workbooks.Open FileName
     On Error GoTo 0
     
     objExcel.Visible = True
@@ -103,13 +103,14 @@ Public Function Reopen_decision() As Boolean
     If InFirst Then
         If xlApp.hWnd <> ThisWorkbook.Parent.hWnd Then NotInFirstActually = True
     End If
+    
 'Is the file alone?
     Dim Alone As Boolean
     If VisibleWorkbookNB = 1 Then Alone = True
 
 'Has the file ever been saved?
     Dim FileEverSaved As Boolean
-    If ThisWorkbook.Path <> "" Then
+    If ThisWorkbook.Path <> vbNullString Then
         FileEverSaved = True
     Else
         MsgBox "Warning: To work properly, the file needs to be saves somewhere on your computer.", vbCritical
@@ -173,8 +174,8 @@ Dim choice_vr As String
 End Function
 
 
-Function VisibleWorkbookNB()
-Dim wb As Workbook, counter As Integer
+Public Function VisibleWorkbookNB() As Long
+    Dim wb As Workbook, counter As Integer
     For Each wb In Excel.Application.Workbooks
         If wb.Windows(1).Visible = True Then
         counter = counter + 1
@@ -183,3 +184,5 @@ Dim wb As Workbook, counter As Integer
 
     VisibleWorkbookNB = counter
 End Function
+
+

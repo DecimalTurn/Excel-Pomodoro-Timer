@@ -1,4 +1,4 @@
-Attribute VB_Name = "API_Sleep"
+Attribute VB_Name = "winSleep"
 'PURPOSE: Define the sleep function to stop the code from running and releasing CPU usage.
 
 Option Explicit
@@ -14,7 +14,7 @@ Option Explicit
 #End If
 
 
-Sub SleepTest()
+Public Sub SleepTest()
 'MsgBox "Execution is started"
 Sleep 10000 'delay in milliseconds
 MsgBox "Waiting completed"

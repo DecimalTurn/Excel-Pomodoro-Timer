@@ -1,4 +1,4 @@
-Attribute VB_Name = "API_Pixel"
+Attribute VB_Name = "winPixel"
 'PURPOSE: This module have functions to help convert pixels to points in Excel, allowing to scale things.
 'REFERENCE: http://www.vbaexpress.com/forum/showthread.php?21896-Pixel-to-Point-ratio
 
@@ -17,7 +17,7 @@ Option Explicit
 Private Const LOGPIXELSX As Long = 88
 Private Const LOGPIXELSY As Long = 90
  
-Function PointPerPixelX() As Double
+Public Function PointPerPixelX() As Double
     #If VBA7 Then
         Dim hdc As LongPtr
     #Else
@@ -27,7 +27,7 @@ Function PointPerPixelX() As Double
     PointPerPixelX = 1 / (GetDeviceCaps(hdc, LOGPIXELSX) / 72)
 End Function
 
-Function PointPerPixelY() As Double
+Public Function PointPerPixelY() As Double
     #If VBA7 Then
         Dim hdc As LongPtr
     #Else
@@ -37,7 +37,7 @@ Function PointPerPixelY() As Double
     PointPerPixelY = 1 / (GetDeviceCaps(hdc, LOGPIXELSY) / 72)
 End Function
 
-Sub Example()
+Private Sub Example()
     #If VBA7 Then
         Dim hdc As LongPtr
     #Else

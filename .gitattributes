@@ -12,6 +12,9 @@
 
 # VBA extensions - Mark as binary
 *.[fF][rR][xX]      binary
+# OR Binary files (no line-ending conversions), diff using hexdump
+# *.bin binary diff=hex
+# *.frx binary diff=hex
                     
 # AutoHotKey - Enforce CRLF using a filter
 *.[aA][hH][kK]      filter=crlf -text

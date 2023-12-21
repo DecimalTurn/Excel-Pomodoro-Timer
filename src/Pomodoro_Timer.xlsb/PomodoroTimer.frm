@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} PomodoroTimer 
    Caption         =   "Timer"
-   ClientHeight    =   924
+   ClientHeight    =   930
    ClientLeft      =   120
-   ClientTop       =   468
-   ClientWidth     =   2196
+   ClientTop       =   465
+   ClientWidth     =   2190
    OleObjectBlob   =   "PomodoroTimer.frx":0000
    StartUpPosition =   1  'CenterOwner
 End
@@ -13,6 +13,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+
 
 
 'Countdown timer
@@ -24,11 +25,13 @@ Const sleeptime = 10 'Miliseconds
 
 Private Sub UserForm_Initialize()
     UFIsVisible = True
+    Dim ss As Worksheet
+    Set ss = ThisWorkbook.Worksheets("Settings")
     'Position of the Userform
-    If ThisWorkbook.Sheets("Settings").Range("Custom_position") = True And Not IsMac Then
+    If ss.Range("Custom_position") = True And Not IsMac Then
         Me.StartUpPosition = 0
-        Me.Top = ThisWorkbook.Sheets("Settings").Range("Top_pos").Value2 * (PointPerPixelY() * GETWORKAREA_HEIGHT - Me.Height)
-        Me.Left = ThisWorkbook.Sheets("Settings").Range("Left_pos").Value2 * (PointPerPixelX() * GETWORKAREA_WIDTH - Me.Width)
+        Me.Top = ss.Range("Top_pos").Value2 * (PointPerPixelY() * GETWORKAREA_HEIGHT - Me.Height)
+        Me.Left = ss.Range("Left_pos").Value2 * (PointPerPixelX() * GETWORKAREA_WIDTH - Me.Width)
     ElseIf Not IsMac Then
         'Reposition the window
         Me.StartUpPosition = 0
@@ -42,7 +45,7 @@ Private Sub UserForm_Initialize()
     S = AllowedTimeSec
     
     With tBx1
-        .Value = Format(CStr(M), "00") & ":" & Format(CStr(S), "00")
+        .Value = Format$(CStr(M), "00") & ":" & Format$(CStr(S), "00")
     End With
 
     
@@ -54,7 +57,7 @@ Private Sub UserForm_Initialize()
     
     If AutoLaunch Then
         If IsMac Then
-            Call Launch_timer_mac
+            LaunchTimerMac Me
         End If
     End If
 
@@ -62,17 +65,19 @@ End Sub
 Private Sub UserForm_Activate()
         If AutoLaunch Then
             If Not IsMac Then
-                Call Launch_timer
+                Launch_timer
             End If
         End If
 End Sub
 
 Private Sub Launch_timer()
-    'Stop the code if the form is not visible
-    If UFIsVisible = False Then: Debug.Print "Form is not visible. The code will now stop.": End
-    
+        
     Dim calc_iniset As Variant: calc_iniset = Application.Calculation
-    Call Optimize_VBA_Performance(True)
+    OptimizeVbaPerformance True
+    
+    Dim ps As Worksheet, ss As Worksheet
+    Set ps = ThisWorkbook.Sheets("Pomodoro")
+    Set ss = ThisWorkbook.Sheets("Settings")
     
     OngoingTimer = True
     StopTimer = False
@@ -89,7 +94,7 @@ Private Sub Launch_timer()
     
     
     Dim M As Double, S As Double
-    Dim TotalTime
+    Dim TotalTime As Double
     Dim EndTime As Double
     Dim RemaingTime As Double
     
@@ -99,36 +104,40 @@ Private Sub Launch_timer()
     
     
     Do
+        
         RemaingTime = DateDiff("s", Now(), EndTime)
         M = Int(RemaingTime / 60)
         S = RemaingTime - 60 * M
         
         With tBx1
-            .Value = Format(CStr(M), "00") & ":" & Format(CStr(S), "00")
+            .Value = Format$(CStr(M), "00") & ":" & Format$(CStr(S), "00")
         End With
         
         'Released the control to the OS
         DoEvents
         
         'Now sleep for 0.1 sec
-        Call Sleep(sleeptime)
+        Sleep sleeptime
+        
+        'Stop the code if the form is not visible
+        If UFIsVisible = False Then: Debug.Print "Form is not visible. The code will now stop.": End
         
     Loop Until RemaingTime <= 0 Or StopTimer
     
     'Recording session
-    If StopTimer = False Or ThisWorkbook.Sheets("Settings").Range("Record_unfinished").Value2 = True Then
-        If (TotalTime - RemaingTime) / 60 > ThisWorkbook.Sheets("Settings").Range("No_Recording_limit") Then
-            Call Add_new_record(TodaysDate, StartTime, Now, Not (StopTimer), ThisWorkbook.Sheets("Pomodoro").Range("TaskNameRng"))
+    If StopTimer = False Or ss.Range("Record_unfinished").Value2 = True Then
+        If (TotalTime - RemaingTime) / 60 > ss.Range("No_Recording_limit") Then
+            Add_new_record TodaysDate, StartTime, Now, Not (StopTimer), ps.Range("TaskNameRng")
         End If
     End If
     
-    Call Optimize_VBA_Performance(False, calc_iniset)
+    OptimizeVbaPerformance False, calc_iniset
     
     If StopTimer = False Then 'If the timer was stopped by the user
         'Proceed with the Break
-        If ThisWorkbook.Sheets("Settings").Range("Sound_end_Pomodoro") = True Then Beep
+        If ss.Range("Sound_end_Pomodoro") = True Then Beep
         TextBox2.Value = "Break"
-        Call TakeBreak
+        TakeBreak
     Else
         'Do nothing
         CommandButton2.caption = "Start"
@@ -144,19 +153,23 @@ Private Sub TakeBreak()
     StopTimer = False
     
     Dim calc_iniset As Variant: calc_iniset = Application.Calculation
-    Call Optimize_VBA_Performance(True)
+    OptimizeVbaPerformance True
+    
+    Dim ps As Worksheet, ss As Worksheet
+    Set ps = ThisWorkbook.Sheets("Pomodoro")
+    Set ss = ThisWorkbook.Sheets("Settings")
     
     Dim M As Double, S As Double
     M = BreakTime
     S = BreakTimeSec
      
     With tBx1
-        .Value = Format(CStr(M), "00") & ":" & Format(CStr(S), "00")
+        .Value = Format$(CStr(M), "00") & ":" & Format$(CStr(S), "00")
     End With
     
-    Call Optimize_VBA_Performance(False, calc_iniset)
+    OptimizeVbaPerformance False, calc_iniset
     
-    Call TakeBreak2
+    TakeBreak2
 
 End Sub
 
@@ -170,6 +183,9 @@ Private Sub TakeBreak2()
     EndTime = DateAdd("s", TotalTime, Now())
     RemaingTime = DateDiff("s", Now(), EndTime)
     
+    Dim ps As Worksheet, ss As Worksheet
+    Set ps = ThisWorkbook.Sheets("Pomodoro")
+    Set ss = ThisWorkbook.Sheets("Settings")
     
     Do
         RemaingTime = DateDiff("s", Now(), EndTime)
@@ -179,9 +195,9 @@ Private Sub TakeBreak2()
         'Flashing
         If TotalTime - RemaingTime < 9 Then
             If S Mod 2 = 1 Then
-                PomodoroTimer.BackColor = GetRGBColor_Fill(ThisWorkbook.Sheets("Settings").Range("Flashing_color")) 'Flashing color
-                TextBox2.BackColor = GetRGBColor_Fill(ThisWorkbook.Sheets("Settings").Range("Flashing_color")) 'Flashing color
-                tBx1.BackColor = GetRGBColor_Fill(ThisWorkbook.Sheets("Settings").Range("Flashing_color")) 'Flashing color
+                PomodoroTimer.BackColor = GetRGBColor_Fill(ss.Range("Flashing_color")) 'Flashing color
+                TextBox2.BackColor = GetRGBColor_Fill(ss.Range("Flashing_color")) 'Flashing color
+                tBx1.BackColor = GetRGBColor_Fill(ss.Range("Flashing_color")) 'Flashing color
             Else
                 PomodoroTimer.BackColor = -2147483633 'Normal color
                 TextBox2.BackColor = -2147483633 'Normal color
@@ -190,26 +206,26 @@ Private Sub TakeBreak2()
         End If
         
         With tBx1
-            .Value = Format(CStr(M), "00") & ":" & Format(CStr(S), "00")
+            .Value = Format$(CStr(M), "00") & ":" & Format$(CStr(S), "00")
         End With
         'Released the control to the OS
         DoEvents
         'Now sleep for 0.1 sec
-        Call Sleep(sleeptime)
+        Sleep sleeptime
     Loop Until RemaingTime <= 0 Or StopTimer
 
     If StopTimer = False Then
         If ThisWorkbook.Sheets("Settings").Range("Sound_end_Break") = True Then Beep
         'Remain in color to get the user's attention
-        PomodoroTimer.BackColor = GetRGBColor_Fill(ThisWorkbook.Sheets("Settings").Range("Flashing_color")) 'Flashing color
-        TextBox2.BackColor = GetRGBColor_Fill(ThisWorkbook.Sheets("Settings").Range("Flashing_color")) 'Flashing color
-        tBx1.BackColor = GetRGBColor_Fill(ThisWorkbook.Sheets("Settings").Range("Flashing_color")) 'Flashing color
+        PomodoroTimer.BackColor = GetRGBColor_Fill(ss.Range("Flashing_color")) 'Flashing color
+        TextBox2.BackColor = GetRGBColor_Fill(ss.Range("Flashing_color")) 'Flashing color
+        tBx1.BackColor = GetRGBColor_Fill(ss.Range("Flashing_color")) 'Flashing color
     Else
         PomodoroTimer.BackColor = -2147483633 'Normal color
         TextBox2.BackColor = -2147483633 'Normal color
         tBx1.BackColor = -2147483633 'Normal color
     End If
-        TextBox2.Value = ""
+        TextBox2.Value = vbNullString
         CommandButton2.caption = "Start"
         OngoingTimer = False
             
@@ -217,7 +233,7 @@ Private Sub TakeBreak2()
         M = Int(AllowedTime)
         S = (AllowedTime - Int(AllowedTime)) * 60
          With tBx1
-            .Value = Format(CStr(M), "00") & ":" & Format(CStr(S), "00")
+            .Value = Format$(CStr(M), "00") & ":" & Format$(CStr(S), "00")
         End With
     
         
@@ -230,14 +246,14 @@ If OngoingTimer = False Then 'Start the timer
     ThisWorkbook.Application.WindowState = xlMinimized
     CommandButton2.caption = "Cancel"
     If Not IsMac Then
-        Call Launch_timer
+        Launch_timer
     Else
-        Call Launch_timer_mac
+        LaunchTimerMac Me
     End If
 Else 'Stop the timer
     StopTimer = True
     OngoingTimer = False
-    'No need to unload the userform here since the main procedure (Launch_timer) will take care of that
+    'No need to unload the userform here since the main procedure (Launch_timer) will take care of that as long as we are still in the loop
     'Unload Me
 End If
     
@@ -247,19 +263,25 @@ End Sub
 Private Sub UserForm_QueryClose(Cancel As Integer, CloseMode As Integer)
     'PURPOSE: This procedure will run if the user click on the "X" to close the userform.
     Dim Wkb As Workbook
-    
     Set Wkb = ThisWorkbook
+    
+    Dim ss As Worksheet
+    Set ss = ThisWorkbook.Sheets("Settings")
+    
     StopTimer = True
     CloseTimer = True
     
     'At this point, since the user clicked on the userform to close it. Excel is the active window, but it might not be on top.
     'Make Excel the active window (optional)
     On Error Resume Next
-    If ThisWorkbook.Sheets("Settings").Range("Reopen_Excel_after_x").Value2 = True And Not IsMac Then
-        Call AppActivate(Wkb.Application.caption, True)
+    If ss.Range("Reopen_Excel_after_x").Value2 = True And Not IsMac Then
+        AppActivate Wkb.Application.caption, True
         ShowWindow GetForegroundWindow, SW_SHOWMAXIMIZED
     End If
     On Error GoTo 0
+    
+    'Make sure that the form isn't considered visible anymore
+    UFIsVisible = False
     
 End Sub
 
