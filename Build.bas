@@ -2,11 +2,11 @@ Attribute VB_Name = "Assembler"
 Option Explicit
 'Instructions
 
-'1. Create an Excel file called Assembler.xlsm (for example) in the same folder as Installer.bas:
+'1. Create an Excel file called Assembler.xlsm (for example) in the same folder as Build.bas:
 '   *\Excel-Pomodoro-Timer\
 
 '2. Open the VB Editor (Alt+F11) right click on the Installer VB Project and choose Import a file and chose:
-'    *\Excel-Pomodoro-Timer\Assembler.bas
+'    *\Excel-Pomodoro-Timer\Build.bas
 
 '3. Run Assemble from the module Assembler (Click somewhere inside the macro and press F5).
 '   Make sure to wait for the confirmation message at the end before doing anything with Excel.
@@ -38,6 +38,7 @@ Sub Assemble()
     Dim sht2 As Worksheet
     Dim sht3 As Worksheet
     Dim sht4 As Worksheet
+    Dim sht5 As Worksheet
     Dim tmpRng As Range
     
     Set sht1 = wb.Sheets.Add
@@ -57,6 +58,8 @@ Sub Assemble()
     sht3.Name = "Recent"
     Set sht4 = wb.Sheets.Add(After:=Sheets(Sheets.Count))
     sht4.Name = "Settings"
+    Set sht5 = wb.Sheets.Add(After:=Sheets(Sheets.Count))
+    sht4.Name = "Archive"
     
     Range("A1").Select
     
@@ -514,7 +517,36 @@ Sub Assemble()
     End With
 
     sht.Range("A1").Select
+
+    '*******************************
+    'Archive Sheet
+    '*******************************
+
+    With sht.Range("A1")
+        .FormulaR1C1 = "ARCHIVE"
+        Selection.Font.Bold = True
+    End With
     
+    Dim btArchive As Button
+    Set tmpRng = sht.Range("A2:C4")
+    Set btArchive = sht.Buttons.Add(Left:=tmpRng.Left, Top:=tmpRng.Top, Width:=tmpRng.Width, Height:=tmpRng.Height)
+    btArchive.OnAction = "Pomodoro_Timer.xlsb!Export_records"
+    btArchive.Text = "Export records"
+    
+    With sht
+        .Range("A7").FormulaR1C1 = "Date"
+        .Range("B7").FormulaR1C1 = "Start"
+        .Range("C7").FormulaR1C1 = "End"
+        .Range("D7").FormulaR1C1 = "Completed"
+        .Range("E7").FormulaR1C1 = "Task"
+        .Range("F7").FormulaR1C1 = "Comment"
+        .ListObjects.Add(xlSrcRange, Range("$A$7:$F$200"), , xlYes).Name = "TableArchive"
+        .Columns("E:E").ColumnWidth = 20.57
+    End With
+
+    sht.Range("A1").Select
+
+
     Sheets("Pomodoro").Select
     wb.SaveAs Filename:=ThisWorkbook.Path & "\" & SHORT_NAME & EXT, FileFormat:=xlExcel12
     
