@@ -51,4 +51,4 @@
 *.[dD][lL][lL]      binary
 
 # Other
-*.[pP][dD][fF]      diff=astextplain
+*.[pP][dD][fF]      -text diff=astextplain
