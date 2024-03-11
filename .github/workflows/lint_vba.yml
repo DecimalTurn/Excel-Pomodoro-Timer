@@ -13,6 +13,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Lint
-      uses: DecimalTurn/lint-vba@main
+      uses: DecimalTurn/lint-vba@main # This action should point to the dev version of the GitHub action
       with:
         path: './src'
