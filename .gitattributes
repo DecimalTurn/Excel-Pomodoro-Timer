@@ -1,54 +1,61 @@
 # By default, auto detect text files and perform LF normalization
-* text=auto eol=lf
+* text=auto                 eol=lf
 
-# Important: To make sure the crlf filter is active, run the following command at the root of the git repo: git config include.path ../.gitconfig
-# (The reason why we need the ".." is to move one folder up because the config file is located in the .git subfolder.)
-
-# VBA extensions - Enforce CRLF using a filter
-*.[bB][aA][sS]      filter=crlf -text working-tree-encoding=CP1252 
-*.[cC][lL][sS]      filter=crlf -text working-tree-encoding=CP1252 
-*.[fF][rR][mM]      filter=crlf -text working-tree-encoding=CP1252
-*.[vV][bB][aA]      filter=crlf -text working-tree-encoding=CP1252
+# VBA extensions - Prevent LF normalization
+*.[bB][aA][sS]              -text diff
+*.[cC][lL][sS]              -text diff
+*.[fF][rR][mM]              -text diff
+*.[vV][bB][aA]              -text diff
 
 # VBA extensions - Mark as binary
-*.[fF][rR][xX]      binary
+*.[fF][rR][xX]              binary
                     
-# AutoHotKey - Enforce CRLF using a filter
-*.[aA][hH][kK]      filter=crlf -text
+# AutoHotKey - Prevent LF normalization
+*.[aA][hH][kK]              -text diff
 
-# Batch scripts - Enforce CRLF using a filter
-*.[cC][mM][dD]      filter=crlf -text
-*.[bB][aA][tT]      filter=crlf -text
-*.[iI][cC][sS]      filter=crlf -text
+# Batch scripts - Prevent LF normalization
+*.[cC][mM][dD]              -text diff
+*.[bB][aA][tT]              -text diff
 
-# Office documents
-*.[xX][lL][aA]      binary
-*.[xX][lL][aA][mM]  binary
-*.[xX][lL][sS]      binary
-*.[xX][lL][sS][bB]  binary
-*.[xX][lL][sS][mM]  binary
-*.[xX][lL][sS][xX]  binary
-*.[dD][oO][cC]      diff=astextplain
-*.[dD][oO][cC][xX]  diff=astextplain
-*.[pP][pP][tT]      binary
-*.[pP][pP][tT][xX]  binary                  
+############################################################################
+# Optional Sections
+############################################################################
+
+# Excel documents (xla, xlam, xls, xlsb, xlsm and xlsx)
+*.[xX][lL][aA]              binary
+*.[xX][lL][aA][mM]          binary
+*.[xX][lL][sS]              binary
+*.[xX][lL][sS][bB]          binary
+*.[xX][lL][sS][mM]          binary
+*.[xX][lL][sS][xX]          binary
+
+# Word documents (doc and docx)
+*.[dD][oO][cC]              diff=astextplain
+*.[dD][oO][cC][xX]          diff=astextplain
+
+# PowerPoint documents (ppt and pptx)
+*.[pP][pP][tT]              binary
+*.[pP][pP][tT][xX]          binary                  
+
+# Access documents (accdb)
+*.[aA][cC][cC][dD][bB]      binary
 
 # Images            
-*.[jJ][pP][gG]      binary
-*.[pP][nN][gG]      binary
-*.[bB][mM][pP]      binary
-*.[gG][iI][fF]      binary
-*.[iI][cC][oO]      binary
+*.[jJ][pP][gG]              binary
+*.[pP][nN][gG]              binary
+*.[bB][mM][pP]              binary
+*.[gG][iI][fF]              binary
+*.[iI][cC][oO]              binary
 
 # Compressed files
-*.[zZ][iI][pP]      binary
-*.[cC][aA][bB]      binary
-*.[7][zZ]           binary
-*.[gG][zZ]          binary
+*.[zZ][iI][pP]              binary
+*.[cC][aA][bB]              binary
+*.[7][zZ]                   binary
+*.[gG][zZ]                  binary
 
 # Executables
-*.[eE][xX][eE]      binary
-*.[dD][lL][lL]      binary
+*.[eE][xX][eE]              binary
+*.[dD][lL][lL]              binary
 
 # Other
-*.[pP][dD][fF]      -text diff=astextplain
+*.[pP][dD][fF]              diff=astextplain
