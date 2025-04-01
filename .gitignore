@@ -9,6 +9,8 @@
 /*.xls
 /*.xlsb
 
+/local-archive
+
 # Ignore specific files 
 *XMLsource\xl\vbaProject.bin
 
